@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#0b0c12">
+  <title>The Veil Below — A Pixel RPG</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main class="game-shell">
+    <header class="topbar">
+      <a class="wordmark" href="#" aria-label="The Veil Below home"><span class="brand-mark">✳</span><span>VEIL<span class="wordmark-dim">/</span>BELOW</span></a>
+      <div class="chapter"><span class="live-dot"></span> CHAPTER I <span class="chapter-divider">/</span> THE DROWNED WOOD</div>
+      <button class="sound-button" id="soundButton" aria-label="Toggle sound" title="Toggle sound"><span id="soundIcon">♫</span><span class="sound-label">SOUND</span></button>
+    </header>
+
+    <section class="game-layout" aria-label="Game">
+      <div class="main-column">
+        <section class="hud" aria-label="Player status">
+          <div class="hero-block">
+            <div class="avatar" aria-hidden="true"><span>✦</span></div>
+            <div class="hero-copy"><div class="eyebrow">WANDERER <span class="level-tag">LV. 03</span></div><div class="hero-name">Mara of the Ash</div></div>
+          </div>
+          <div class="vitals">
+            <div class="vital-row"><span class="vital-label"><i class="heart-icon">♥</i> VITALITY</span><span class="vital-count" id="healthText">5 / 5</span></div>
+            <div class="health-track" id="healthBar" aria-label="Health"></div>
+          </div>
+          <div class="souls"><span class="soul-gem">◆</span><div><span class="eyebrow">GLOAM SHARDS</span><strong id="shardCount">00</strong></div></div>
+        </section>
+
+        <section class="stage-frame">
+          <div class="stage-topline"><div class="location"><span class="location-icon">⌖</span><span id="locationName">THE MOURNING PATH</span></div><div class="stage-readout"><span class="rec-dot"></span> <span id="stateLabel">EXPLORE</span><span class="readout-divider">·</span><span id="coordinates">000 M</span></div></div>
+          <div class="canvas-wrap">
+            <canvas id="game" width="960" height="540" aria-label="The Veil Below platform game"></canvas>
+            <div class="canvas-vignette"></div>
+            <div class="intro-overlay" id="introOverlay">
+              <div class="intro-card">
+                <div class="intro-symbol">☽</div>
+                <div class="eyebrow">A SHORT, DARK ADVENTURE</div>
+                <h1>The Veil<br><em>Below</em></h1>
+                <p>The wood remembers every soul it has swallowed.<br>Find the old road. Silence what waits at its end.</p>
+                <button class="primary-button" id="startButton">ENTER THE HOLLOW <span>→</span></button>
+                <div class="intro-hint">A, D TO MOVE <i>·</i> SPACE TO JUMP <i>·</i> J TO STRIKE</div>
+              </div>
+            </div>
+            <div class="toast" id="toast" aria-live="polite"></div>
+            <div class="boss-banner" id="bossBanner"><span class="boss-eye">◉</span><div><b>THE HOLLOW KING</b><small>AN OLD HUNGER STIRS</small></div></div>
+            <div class="boss-health" id="bossHealth"><div class="boss-health-heading"><span>THE HOLLOW KING</span><span id="bossHealthText">8 / 8</span></div><div class="boss-track"><div id="bossHealthFill"></div></div></div>
+            <div class="end-overlay" id="endOverlay"><div class="end-card"><div class="end-kicker" id="endKicker">THE WOOD FALLS QUIET</div><h2 id="endTitle">A SOUL SET FREE</h2><p id="endText">The path beyond is yours now.</p><button class="primary-button" id="restartButton">WALK AGAIN <span>↻</span></button></div></div>
+          </div>
+          <div class="stage-footer"><div class="objective"><span class="objective-mark">◎</span><div><span class="eyebrow">CURRENT OBJECTIVE</span><strong id="objectiveText">Follow the lanterns into the wood</strong></div></div><div class="progress-wrap"><div class="progress-copy"><span>THE OLD ROAD</span><span id="progressText">0%</span></div><div class="progress-track"><div id="progressFill"></div></div></div></div>
+        </section>
+
+        <div class="controls-row">
+          <div class="controls-hint"><span class="keycap">A</span><span class="keycap">D</span><span class="hint-copy">MOVE</span><span class="hint-gap"></span><span class="keycap wide">SPACE</span><span class="hint-copy">JUMP</span><span class="hint-gap"></span><span class="keycap">J</span><span class="hint-copy">STRIKE</span><span class="hint-gap"></span><span class="keycap">E</span><span class="hint-copy">HEAL</span></div>
+          <div class="mini-tip" id="tipText"><span class="tip-spark">✦</span> Stay light on your feet, wanderer.</div>
+        </div>
+      </div>
+
+      <aside class="side-column">
+        <section class="side-card map-card"><div class="card-head"><span class="eyebrow">FIELD NOTES</span><span class="card-index">01 — 03</span></div><h2>Into the<br><em>Drowned Wood</em></h2><p class="side-intro">A forgotten road winds through the grave trees. Something watches from the dark.</p><div class="map-box"><canvas id="minimap" width="280" height="100" aria-label="Map of the old road"></canvas><div class="map-labels"><span>ASHEN GATE</span><span>THE THRONE</span></div></div><div class="route-status"><span class="route-dot"></span><span id="routeStatus">ROAD UNCHARTED</span><span class="route-dash"></span><span class="route-boss">BOSS</span></div></section>
+        <section class="side-card inventory-card"><div class="card-head"><span class="eyebrow">FIELD KIT</span><span class="card-index">01 / 02</span></div><div class="item-row"><div class="item-icon flask">♜</div><div class="item-copy"><strong>Witch's tonic</strong><small>Restores 2 vitality</small></div><span class="item-count" id="potionCount">× 2</span><kbd>E</kbd></div><div class="item-row weapon-row"><div class="item-icon sword">⚔</div><div class="item-copy"><strong>Grief &amp; Gloam</strong><small>Iron remembers</small></div><span class="weapon-level">+1</span></div></section>
+        <section class="side-card journal-card"><div class="card-head"><span class="eyebrow">WHISPERS</span><span class="whisper-mark">“</span></div><p id="whisperText">“Do not follow the lights that move against the wind.”</p><div class="journal-meta"><span class="journal-line"></span> FOUND IN THE MARGINS</div></section>
+        <div class="side-bottom"><span class="seal">✳</span><span>THE VEIL IS THIN HERE</span><span class="side-bottom-line"></span></div>
+      </aside>
+    </section>
+    <footer class="page-footer"><span>© 1891 — THE GLOAM ARCHIVE</span><span>NO LIGHT LEAVES UNCHANGED</span><span class="footer-version">BUILD 0.3.1 <i>✦</i></span></footer>
+  </main>
+  <div class="touch-controls" aria-label="Touch controls"><div class="touch-group"><button data-control="left" aria-label="Move left">←</button><button data-control="right" aria-label="Move right">→</button></div><div class="touch-group"><button data-control="attack" aria-label="Strike">✦</button><button data-control="jump" aria-label="Jump">↑</button><button data-control="heal" aria-label="Use tonic">✚</button></div></div>
+  <script src="game.js"></script>
+</body>
+</html>
